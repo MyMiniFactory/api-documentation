@@ -536,53 +536,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectUpload'
-  /related_objects/{object_id}:
-    parameters:
-      - $ref: '#/components/parameters/object_id'
-      - $ref: '#/components/parameters/page'
-      - $ref: '#/components/parameters/per_page'
-    get:
-      security:
-        - oauth_authorization_code:
-            - basic
-        - oauth_implicit:
-            - basic
-        - key: []
-      tags:
-        - Objects
-      description: 'Get the related objects to a chosen one, using its id.'
-      responses:
-        200:
-          description: List of objects.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Objects'
-  /related_objects_by_type/{object_id}/{type}:
-    parameters:
-      - $ref: '#/components/parameters/object_id'
-      - $ref: '#/components/parameters/relationship_type'
-      - $ref: '#/components/parameters/page'
-      - $ref: '#/components/parameters/per_page'
-    get:
-      security:
-        - oauth_authorization_code:
-            - basic
-        - oauth_implicit:
-            - basic
-        - key: []
-      tags:
-        - Objects
-      description: >-
-        Get the related objects to a chosen one, using its id and the type of
-        relationship.
-      responses:
-        '200':
-          description: List of objects.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Objects'
+  # /related_objects/{object_id}:
+  #   parameters:
+  #     - $ref: '#/components/parameters/object_id'
+  #     - $ref: '#/components/parameters/page'
+  #     - $ref: '#/components/parameters/per_page'
+  #   get:
+  #     security:
+  #       - oauth_authorization_code:
+  #           - basic
+  #       - oauth_implicit:
+  #           - basic
+  #       - key: []
+  #     tags:
+  #       - Objects
+  #     description: 'Get the related objects to a chosen one, using its id.'
+  #     responses:
+  #       200:
+  #         description: List of objects.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Objects'
+  # /related_objects_by_type/{object_id}/{type}:
+  #   parameters:
+  #     - $ref: '#/components/parameters/object_id'
+  #     - $ref: '#/components/parameters/relationship_type'
+  #     - $ref: '#/components/parameters/page'
+  #     - $ref: '#/components/parameters/per_page'
+  #   get:
+  #     security:
+  #       - oauth_authorization_code:
+  #           - basic
+  #       - oauth_implicit:
+  #           - basic
+  #       - key: []
+  #     tags:
+  #       - Objects
+  #     description: >-
+  #       Get the related objects to a chosen one, using its id and the type of
+  #       relationship.
+  #     responses:
+  #       '200':
+  #         description: List of objects.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Objects'
   /objects/{object_id}/files:
     parameters:
       - $ref: '#/components/parameters/object_id'

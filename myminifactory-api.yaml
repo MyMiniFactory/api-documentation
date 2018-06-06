@@ -723,6 +723,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrintWithUploadIds'
 
+  /prints/{print_id}/like:
+    parameters:
+      - $ref: '#/components/parameters/print_id'
+    post:
+      security:
+        - oauth2:
+            - basic
+      tags:
+        - Prints
+        - Like
+      description: Post a like to a Print.
+      responses:
+        '200':
+          description: Details about the posted like.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostLikeRequest'
+    delete:
+      security:
+        - oauth2:
+            - basic
+      tags:
+        - Prints
+        - Like
+      description: Post a like to a Print.
+      responses:
+        '200':
+          description: Details about the deleted like.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteLikeRequest'
+  /prints/{print_id}/is-liked:
+    parameters:
+      - $ref: '#/components/parameters/print_id'
+    get:
+      security:
+        - oauth2:
+            - basic
+      tags:
+        - Prints
+        - Like
+      description: Get information about a Print being liked by the current user.
+      responses:
+        '200':
+          description: Print liked or not.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsLikedRequest'
+
   /objects/{object_id}/upload_status:
     parameters:
       - $ref: '#/components/parameters/object_id'
@@ -1195,6 +1247,13 @@ components:
       name: object_id
       in: path
       description: The object identifier number
+      schema:
+        type: number
+      required: true
+    print_id:
+      name: print_id
+      in: path
+      description: The Print identifier number
       schema:
         type: number
       required: true
@@ -1736,6 +1795,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImageUploadStatus'
+
+    PostLikeRequest:
+      type: object
+      properties:
+        like:
+          type: string
+          description: >-
+            Possible values are: 'Done', 'Already Done'
+
+    DeleteLikeRequest:
+      type: object
+      properties:
+        dislike:
+          type: string
+          description: >-
+            Possible values are: 'Done', 'Already Done'
+
+    IsLikedRequest:
+      type: integer
+      description: >-
+        Possible values are: '1', '0'
 
     FileUploadRequest:
      type: object

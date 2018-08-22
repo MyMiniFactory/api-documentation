@@ -1277,6 +1277,27 @@ components:
           type: string
         website:
           type: string
+        followings:
+          type: integer
+          description: Number of following accounts
+        followers:
+          type: integer
+          description: Number of followers accounts
+        objects:
+          type: integer
+          description: Number of published objects
+        total_prints:
+          type: integer
+          description: Number of published pictures of print
+        total_collections:
+          type: integer
+          description: Number of public collections
+        likes:
+          type: integer
+          description: Sum of all object likes
+        following:
+          type: boolean
+          description: Whether the connected account is following the user. Available for oauth2 connected user.
 
     Objects:
       type: object
@@ -1307,6 +1328,10 @@ components:
             description: "0: Private, 2: Public"
         description:
           type: string
+          description: Plain text description
+        description_html:
+          type: string
+          description: HTML version of the description
         views:
           type: integer
         likes:
@@ -1315,7 +1340,7 @@ components:
           type: string
           description: The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
         featured:
-          type: string
+          type: boolean
         complexity:
           type: integer
         dimensions:
@@ -1332,6 +1357,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/File'
+        prints:
+          type: array
+          items:
+            $ref: '#/components/schemas/Print'
         categories:
           type: array
           items:
@@ -1344,6 +1373,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/License'
+        is_liked:
+          type: boolean
+          description: Whether this object has been liked. Available for oauth2 connected user.
+        is_saved:
+          type: boolean
+          description: Whether this has is in the user's save for later collection. Available for oauth2 connected user.
 
     File:
       type: object
@@ -1357,10 +1392,15 @@ components:
         download_url:
           type: string
           description: Available ONLY with Oauth connected User. Not with API key.
+        viewer_url:
+          type: string
+          description: Reduced version of the 3D file for preview (Format stl of ply).
         thumbnail_url:
           type: string
+          description: Render image thumbnail URL
         size:
           type: string
+          description: Size of the file in Bytes.
 
     Print:
       type: object
@@ -1431,6 +1471,18 @@ components:
               type: string
             height:
               type: string
+        large:
+          type: object
+          properties:
+            url:
+              type: string
+            width:
+              type: string
+            height:
+              type: string
+        is_print_image_selected:
+          type: boolean
+          description: If the print has be selected to appear in the main gallery (Can be null, mean no)
 
     Image:
       type: object
@@ -1750,7 +1802,7 @@ components:
       properties:
         type:
           type: string
-          description: "Possible values are: 'mention', 'remix', 'commercial-use', 'exclusivity'"
+          description: "Possible values are: 'mention', 'remix', 'commercial-use', 'exclusivity', 'share', 'store'"
         value:
           type: boolean
 

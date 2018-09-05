@@ -1140,6 +1140,13 @@ components:
       description: "License filter: this object should be shared exclusivly on MyMiniFactory."
       schema:
         type: string
+    store:
+      name: store
+      in: query
+      required: false
+      description: "Store License filter: 1: the object has the store license and isn't free. 0: the object hasn't the store license."
+      schema:
+        type: string
     username:
       name: username
       in: path

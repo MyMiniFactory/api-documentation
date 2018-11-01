@@ -7,7 +7,7 @@ Additionnal information to create an application using the MyMiniFactory API is 
 
 ## Authentication with OAuth 2.0
 
-We support the OAuth 2.0 Grant Types described [here](https://github.com/MyMiniFactory/api-documentation/blob/master/oauth2-instructions.yaml)
+We support the OAuth 2.0 Grant Types described [here](https://github.com/MyMiniFactory/api-documentation/blob/master/oauth2-instructions.md)
 
 
 ## Reference documentation
@@ -19,7 +19,7 @@ The OpenAPI description file of the Official MyMiniFactory API is available [her
 
 ## Uploading files to the MyMiniFactory API
 
-Additionnal instruction to upload files is available [here](https://github.com/MyMiniFactory/api-documentation/blob/master/upload-instructions.yaml)
+Additionnal instruction to upload files is available [here](https://github.com/MyMiniFactory/api-documentation/blob/master/upload-instructions.md)
 
 ## Security contact
 

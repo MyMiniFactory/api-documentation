@@ -1339,6 +1339,12 @@ components:
         description_html:
           type: string
           description: HTML version of the description
+        printing_details:
+          type: string
+          description: Printing instruction from the designer
+        printing_details_html:
+          type: string
+          description: HTML version of the printing_details
         views:
           type: integer
         likes:

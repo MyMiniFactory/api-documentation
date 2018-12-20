@@ -927,6 +927,27 @@ paths:
 #########################################
 #               Collections             #
 #########################################
+  /collection:
+    post:
+        security:
+         - oauth2:
+           - basic
+        tags:
+          - Collections
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionPayload'
+        description: "Post a new collection."
+        responses:
+          201:
+            description: The collection information
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/OneCollection'
+
   /collections:
     parameters:
       - $ref: '#/components/parameters/page'
@@ -952,11 +973,11 @@ paths:
 
 
   /collections/{collection_id}:
-    parameters:
-      - $ref: '#/components/parameters/collection_id'
-      - $ref: '#/components/parameters/page'
-      - $ref: '#/components/parameters/per_page'
     get:
+      parameters:
+        - $ref: '#/components/parameters/collection_id'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
       tags:
         - Collections
       description: Get information about a collection.
@@ -967,6 +988,75 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
+                
+    patch:
+      parameters:
+        - $ref: '#/components/parameters/collection_id'
+      security:
+       - oauth2:
+         - basic
+      tags:
+        - Collections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionPayload'
+      description: "Edit a collection"
+      responses:
+        201:
+          description: The collection information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OneCollection'
+                
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/collection_id'
+      security:
+       - oauth2:
+         - basic
+      tags:
+        - Collections
+      description: "Delete a collection"
+      responses:
+        204:
+          description: ''
+          
+  /collections/{collection_id}/objects:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/collection_id'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      tags:
+        - Collections
+        - Objects
+      description: Get objects inside a collection.
+      responses:
+        200:
+          description: The list of objects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objects'
+                
+  /collections/{collection_id}/object/{object_id}:
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/collection_id'
+        - $ref: '#/components/parameters/object_id'
+      security:
+       - oauth2:
+         - basic
+      tags:
+        - Collections
+      description: "Delete an object in collection"
+      responses:
+        204:
+          description: ''
+                
 
 #########################################
 #               Categories              #
@@ -1067,7 +1157,7 @@ components:
       name: per_page
       in: query
       required: false
-      description: Number of results per page. Default is 20
+      description: Number of results per page. Default is 30
       schema:
         type: string
     sort:
@@ -1558,6 +1648,19 @@ components:
           $ref: '#/components/schemas/Object'
         objects:
           $ref: '#/components/schemas/Objects'
+          
+    CollectionPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        public:
+          type: boolean
+        object:
+          type: integer
+      required:
+        - name
+        - public
 
     OneCollection:
       type: object

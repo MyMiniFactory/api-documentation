@@ -2,24 +2,19 @@ openapi: 3.0.0
 info:
   title: MyMiniFactory API
   description: Official API the 3D printable object platform  www.myminifactory.com
-  version: "2"
+  version: '2'
   contact:
     name: MyMiniFactory
-    url: https://www.myminifactory.com/contact_us/
+    url: 'https://www.myminifactory.com/contact_us/'
     email: info@myminifactory.com
 servers:
-  - url: https://www.myminifactory.com/api/v2
+  - url: 'https://www.myminifactory.com/api/v2'
     description: Production server.
-  - url: https://staging.myminifactory.com/api/v2
+  - url: 'https://staging.myminifactory.com/api/v2'
     description: Staging server. Regularly snapshotted database.
-  - url: http://mmf.local/api/v2
+  - url: 'http://mmf.local/api/v2'
     description: Dev server.
-
-################################################################################
-#                                           Paths                              #
-################################################################################
 paths:
-
   /search:
     parameters:
       - $ref: '#/components/parameters/q'
@@ -37,14 +32,16 @@ paths:
       - $ref: '#/components/parameters/exclusive'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Search
-      description: Give search results according the the query. Searches objects by default.
+      description: >-
+        Give search results according the the query. Searches objects by
+        default.
       responses:
-        200:
+        '200':
           description: List of requested items
           content:
             application/json:
@@ -56,61 +53,55 @@ paths:
                   items:
                     type: array
                     items:
-                     $ref: '#/components/schemas/Object'
-
-#########################################
-#               Users                   #
-#########################################
+                      $ref: '#/components/schemas/Object'
   /user:
     get:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Users
       description: Get the current user basic information.
       responses:
-        200:
+        '200':
           description: User object
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
-  /users/{username}:
+  '/users/{username}':
     parameters:
       - $ref: '#/components/parameters/username'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
       description: Get basic information about a user.
       responses:
-        200:
+        '200':
           description: The user information
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
-  /users/{username}/following:
+  '/users/{username}/following':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
       description: Get a user's followings.
       responses:
-        200:
+        '200':
           description: List of users
           content:
             application/json:
@@ -123,22 +114,21 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
-
-  /users/{username}/followers:
+  '/users/{username}/followers':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
       description: Get a user's followers.
       responses:
-        200:
+        '200':
           description: List of users
           content:
             application/json:
@@ -151,45 +141,43 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
-
-  /users/{username}/objects:
+  '/users/{username}/objects':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
         - Objects
       description: Get a user's objects.
       responses:
-        200:
+        '200':
           description: List of objects
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-
-  /users/{username}/objects_liked:
+  '/users/{username}/objects_liked':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
         - Objects
       description: Get a user's liked objects.
       responses:
-        200:
+        '200':
           description: List of objects
           content:
             application/json:
@@ -202,23 +190,22 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Object'
-
-  /users/{username}/collections:
+  '/users/{username}/collections':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
         - Collections
       description: Get a user's collections.
       responses:
-        200:
+        '200':
           description: List of collections
           content:
             application/json:
@@ -231,8 +218,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OneCollection'
-
-  /users/{username}/collections/{collection_slug}:
+  '/users/{username}/collections/{collection_slug}':
     parameters:
       - $ref: '#/components/parameters/username'
       - $ref: '#/components/parameters/collection_slug'
@@ -240,35 +226,34 @@ paths:
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
       description: Get a user's collections.
       responses:
-        200:
+        '200':
           description: The collection information and its objects
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-
   /feed:
     parameters:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Users
         - Objects
-      description: "Get a user's feed: the list lastest objects of his followings"
+      description: 'Get a user''s feed: the list lastest objects of his followings'
       responses:
-        200:
+        '200':
           description: List of objects
           content:
             application/json:
@@ -281,35 +266,29 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Object'
-                      
-#########################################
-#               Comments                #
-#########################################
-
-
-  /comments/{comment_id}:
+  '/comments/{comment_id}':
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Comments
       responses:
-        200:
+        '200':
           description: Get one comment
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Comment'
+                $ref: '#/components/schemas/Comment'
     patch:
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Comments
       requestBody:
@@ -317,9 +296,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CommentPayload'
-      description: "Edit a comment"
+      description: Edit a comment
       responses:
-        201:
+        '201':
           description: Details about the created print.
           content:
             application/json:
@@ -329,13 +308,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Comments
-      description: "Delete a comment"
+      description: Delete a comment
       responses:
-        200:
+        '200':
           description: Done.
           content:
             application/json:
@@ -344,12 +323,11 @@ paths:
                 properties:
                   message:
                     type: string
-
   /comment:
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Comments
       requestBody:
@@ -357,27 +335,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CommentPayload'
-      description: "Post a new comment. Possible types: 'object', 'print_job', 'idea'"
+      description: 'Post a new comment. Possible types: ''object'', ''print_job'', ''idea'''
       responses:
-        201:
+        '201':
           description: Details about the created print.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
-
-  /comments/{comment_id}/replies:
+  '/comments/{comment_id}/replies':
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Comments
       responses:
-        200:
+        '200':
           description: List of comments in replies to a comment
           content:
             application/json:
@@ -390,21 +367,19 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Comment'
-
-
-  /objects/{object_id}/comments:
+  '/objects/{object_id}/comments':
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Comments
       description: Get a object's comments.
       responses:
-        200:
+        '200':
           description: List of comments of the object
           content:
             application/json:
@@ -417,21 +392,19 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Comment'
-
-
-  /print_jobs/{object_id}/comments:
+  '/print_jobs/{object_id}/comments':
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Comments
       description: Get a print jobs's comments.
       responses:
-        200:
+        '200':
           description: List of comments of the object
           content:
             application/json:
@@ -444,20 +417,19 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Comment'
-
-  /ideas/{idea_id}/comments:
+  '/ideas/{idea_id}/comments':
     parameters:
       - $ref: '#/components/parameters/idea_id'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Comments
       description: Get a ideas's comments.
       responses:
-        200:
+        '200':
           description: List of comments of the object
           content:
             application/json:
@@ -470,12 +442,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Comment'
-
-
-#########################################
-#               Objects                 #
-#########################################
-  /objects/{object_id}:
+  '/objects/{object_id}':
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
@@ -483,24 +450,23 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Objects
       description: Get information about an object.
       responses:
-        200:
+        '200':
           description: The 3D object object
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Object'
-
     patch:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       parameters:
         - $ref: '#/components/schemas/ObjectPatchMetadata'
       tags:
@@ -508,18 +474,17 @@ paths:
         - Upload
       description: Sent object metadata.
       responses:
-        200:
+        '200':
           description: The 3D object object
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectUpload'
-
   /object:
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       requestBody:
         content:
           application/json:
@@ -528,77 +493,32 @@ paths:
       tags:
         - Objects
         - Upload
-      description: Upload a object and get back upload ids for post-upload files and pictures.
+      description: >-
+        Upload a object and get back upload ids for post-upload files and
+        pictures.
       responses:
-        200:
+        '200':
           description: Details about the created 3D object.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectUpload'
-  # /related_objects/{object_id}:
-  #   parameters:
-  #     - $ref: '#/components/parameters/object_id'
-  #     - $ref: '#/components/parameters/page'
-  #     - $ref: '#/components/parameters/per_page'
-  #   get:
-  #     security:
-  #       - oauth_authorization_code:
-  #           - basic
-  #       - oauth_implicit:
-  #           - basic
-  #       - key: []
-  #     tags:
-  #       - Objects
-  #     description: 'Get the related objects to a chosen one, using its id.'
-  #     responses:
-  #       200:
-  #         description: List of objects.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Objects'
-  # /related_objects_by_type/{object_id}/{type}:
-  #   parameters:
-  #     - $ref: '#/components/parameters/object_id'
-  #     - $ref: '#/components/parameters/relationship_type'
-  #     - $ref: '#/components/parameters/page'
-  #     - $ref: '#/components/parameters/per_page'
-  #   get:
-  #     security:
-  #       - oauth_authorization_code:
-  #           - basic
-  #       - oauth_implicit:
-  #           - basic
-  #       - key: []
-  #     tags:
-  #       - Objects
-  #     description: >-
-  #       Get the related objects to a chosen one, using its id and the type of
-  #       relationship.
-  #     responses:
-  #       '200':
-  #         description: List of objects.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Objects'
-  /objects/{object_id}/files:
+  '/objects/{object_id}/files':
     parameters:
       - $ref: '#/components/parameters/object_id'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Objects
         - Files
       description: Get the list of files of the object.
       responses:
-        200:
+        '200':
           description: List of files of the object
           content:
             application/json:
@@ -611,23 +531,22 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/File'
-
-  /objects/{object_id}/prints:
+  '/objects/{object_id}/prints':
     parameters:
       - $ref: '#/components/parameters/object_id'
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
       security:
-       - oauth2:
-         - basic
-       - key: []
+        - oauth2:
+            - basic
+        - key: []
       tags:
         - Objects
         - Prints
       description: Get the list of prints of the object.
       responses:
-        200:
+        '200':
           description: The 3D file information
           content:
             application/json:
@@ -640,14 +559,13 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Print'
-
-  /objects/{object_id}/print (application/json):
+  '/objects/{object_id}/print (application/json)':
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Objects
         - Prints
@@ -672,45 +590,39 @@ paths:
                     format: binary
       description: Upload a print and get back upload ids for post-upload pictures.
       responses:
-        201:
+        '201':
           description: Details about the created print.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrintWithUploadIds'
-
-  /objects/{object_id}/upload_status:
+  '/objects/{object_id}/upload_status':
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Objects
         - Upload
       description: Check the status of an object and its files.
       responses:
-        200:
+        '200':
           description: Upload status of the specified object.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectUploadStatus'
-
-
-#########################################
-#               Files                   #
-#########################################
-  /objects/{object_id}/file (upload):
+  '/objects/{object_id}/file (upload)':
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
       security:
         - oauth_authorization_code:
-          - basic
+            - basic
         - oauth_implicit:
-          - basic
+            - basic
       tags:
         - Files
         - Upload
@@ -719,15 +631,16 @@ paths:
           multipart/form-data:
             schema:
               properties:
-                # The property name 'files' will be used for all files.
                 files:
                   type: array
                   items:
                     type: string
                     format: binary
-      description: Upload one or several file(s) associated to an object using multipart/form-data
+      description: >-
+        Upload one or several file(s) associated to an object using
+        multipart/form-data
       responses:
-        201:
+        '201':
           description: Array of uploaded filenames
           content:
             application/json:
@@ -738,16 +651,15 @@ paths:
                   properties:
                     filename:
                       type: string
-
-  /objects/{object_id}/image (upload):
+  '/objects/{object_id}/image (upload)':
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
       security:
         - oauth_authorization_code:
-          - basic
+            - basic
         - oauth_implicit:
-          - basic
+            - basic
       tags:
         - Files
         - Upload
@@ -756,15 +668,16 @@ paths:
           multipart/form-data:
             schema:
               properties:
-                # The property name 'files' will be used for all files.
                 files:
                   type: array
                   items:
                     type: string
                     format: binary
-      description: Upload one or several images(s) associated to an object using multipart/form-data
+      description: >-
+        Upload one or several images(s) associated to an object using
+        multipart/form-data
       responses:
-        201:
+        '201':
           content:
             application/json:
               schema:
@@ -775,50 +688,46 @@ paths:
                     filename:
                       type: string
           description: Array of uploaded filenames
-
-  /files/{file_id}:
+  '/files/{file_id}':
     parameters:
       - $ref: '#/components/parameters/file_id'
     get:
       security:
         - oauth_authorization_code:
-          - basic
+            - basic
         - oauth_implicit:
-          - basic
+            - basic
         - key: []
       tags:
         - Objects
         - Files
       description: Information of a file including the download link
       responses:
-        200:
+        '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/File'
           description: Information of a file including the download link
-
   /file (binary/octet-stream):
     parameters:
-       - $ref: '#/components/parameters/upload_id'
+      - $ref: '#/components/parameters/upload_id'
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Files
         - Upload
       requestBody:
         content:
-            # a file of any of the supported 3d formats or zip
-            # TODO list formats
           binary:
             schema:
               type: string
               format: binary
       description: Upload one file associated to an upload id
       responses:
-        201:
+        '201':
           content:
             application/json:
               schema:
@@ -826,13 +735,12 @@ paths:
                 properties:
                   filename:
                     type: string
-          description: "Uploaded filename"
-
+          description: Uploaded filename
   /file (multipart/form-data):
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Files
         - Upload
@@ -841,7 +749,6 @@ paths:
           multipart/form-data:
             schema:
               properties:
-                # The property name 'files' will be used for all files.
                 files:
                   type: array
                   items:
@@ -849,43 +756,41 @@ paths:
                     format: binary
       description: Upload one or several file(s) using multipart/form-data
       responses:
-        201:
+        '201':
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/FileUploadId'
-          description: "Array of upload id/filename pairs"
-
+          description: Array of upload id/filename pairs
   /image (binary/octet-stream):
     parameters:
-       - $ref: '#/components/parameters/upload_id'
+      - $ref: '#/components/parameters/upload_id'
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Files
         - Upload
       requestBody:
         content:
-            # a binary file of type png or jpeg
-          'image/jpeg':
+          image/jpeg:
             schema:
               type: string
               format: binary
-          'image/png':
+          image/png:
             schema:
               type: string
               format: binary
-          'image/gif':
+          image/gif:
             schema:
               type: string
               format: binary
       description: Upload one image associated to an upload id
       responses:
-        201:
+        '201':
           content:
             application/json:
               schema:
@@ -893,13 +798,12 @@ paths:
                 properties:
                   filename:
                     type: string
-          description: "Uploaded image name"
-
+          description: Uploaded image name
   /image (multipart/form-data):
     post:
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Files
         - Upload
@@ -915,39 +819,34 @@ paths:
                     format: binary
       description: Upload one or several image(s) using multipart/form-data
       responses:
-        201:
+        '201':
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/FileUploadId'
-          description: "Array of upload id/filename pairs"
-
-#########################################
-#               Collections             #
-#########################################
+          description: Array of upload id/filename pairs
   /collection:
     post:
-        security:
-         - oauth2:
-           - basic
-        tags:
-          - Collections
-        requestBody:
+      security:
+        - oauth2:
+            - basic
+      tags:
+        - Collections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionPayload'
+      description: Post a new collection.
+      responses:
+        '201':
+          description: The collection information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CollectionPayload'
-        description: "Post a new collection."
-        responses:
-          201:
-            description: The collection information
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/OneCollection'
-
+                $ref: '#/components/schemas/OneCollection'
   /collections:
     parameters:
       - $ref: '#/components/parameters/page'
@@ -957,7 +856,7 @@ paths:
         - Collections
       description: Get all the public collections
       responses:
-        200:
+        '200':
           description: The collection information
           content:
             application/json:
@@ -970,9 +869,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OneCollection'
-
-
-  /collections/{collection_id}:
+  '/collections/{collection_id}':
     get:
       parameters:
         - $ref: '#/components/parameters/collection_id'
@@ -982,19 +879,18 @@ paths:
         - Collections
       description: Get information about a collection.
       responses:
-        200:
+        '200':
           description: The collection information and its objects
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-                
     patch:
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Collections
       requestBody:
@@ -1002,29 +898,27 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CollectionPayload'
-      description: "Edit a collection"
+      description: Edit a collection
       responses:
-        201:
+        '201':
           description: The collection information.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/OneCollection'
-                
     delete:
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Collections
-      description: "Delete a collection"
+      description: Delete a collection
       responses:
-        204:
+        '204':
           description: ''
-          
-  /collections/{collection_id}/objects:
+  '/collections/{collection_id}/objects':
     get:
       parameters:
         - $ref: '#/components/parameters/collection_id'
@@ -1035,32 +929,26 @@ paths:
         - Objects
       description: Get objects inside a collection.
       responses:
-        200:
+        '200':
           description: The list of objects
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-                
-  /collections/{collection_id}/object/{object_id}:
+  '/collections/{collection_id}/object/{object_id}':
     delete:
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/object_id'
       security:
-       - oauth2:
-         - basic
+        - oauth2:
+            - basic
       tags:
         - Collections
-      description: "Delete an object in collection"
+      description: Delete an object in collection
       responses:
-        204:
+        '204':
           description: ''
-                
-
-#########################################
-#               Categories              #
-#########################################
   /categories:
     parameters:
       - $ref: '#/components/parameters/top_category'
@@ -1071,7 +959,7 @@ paths:
         - Categories
       description: Get information about a category.
       responses:
-        200:
+        '200':
           description: The category information and its children
           content:
             application/json:
@@ -1084,8 +972,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Category'
-
-  /categories/{category_id}:
+  '/categories/{category_id}':
     parameters:
       - $ref: '#/components/parameters/category_id'
     get:
@@ -1093,17 +980,13 @@ paths:
         - Categories
       description: Get information about a category.
       responses:
-        200:
+        '200':
           description: The category information and its children
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
-
-#########################################
-#               Tags                    #
-#########################################
-  /tags/{tag_name}/objects:
+  '/tags/{tag_name}/objects':
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
@@ -1118,7 +1001,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-  /tags/{tag_name}/ideas:
+  '/tags/{tag_name}/ideas':
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
@@ -1133,10 +1016,101 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Idea'
-
-##########################################################################
-#                                     Paths                              #
-##########################################################################
+  '/scan':
+    post:
+      tags:
+        - Scans
+      description: Create a scan object
+      responses:
+        '200':
+          description: Created scan details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id: 
+                    type: integer
+                  name: 
+                    type: string
+                  status:
+                    $ref: '#/components/schemas/ScanStatus'
+  '/scan/{scan_id}':
+    parameters:
+      - $ref: '#/components/parameters/scan_id'
+    patch:
+      tags:
+        - Scans
+      description: Edit a scan object
+      responses:
+        '200':
+          description: Information on edit just made
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stw_object_id:
+                    type: integer
+                  name:
+                    type: string
+                  modified_properties:
+                    description: All properties modified by request with their new values
+    get:
+      tags:
+        - Scans
+      description: Get a scan object
+      responses: 
+        '200':
+          description: Information on requested scan
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scan'
+  '/scan/{scan_id}/image':
+    parameters:
+      - $ref: '#/components/parameters/scan_id'
+    post:
+      tags:
+        - Scans
+      description: Add images to a scan
+      responses:
+        '200':
+          description: Information on added images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id:
+                    type: integer
+                  images:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        image_id:
+                          type: integer
+  '/users/{username}/scans':
+    parameters:
+      - $ref: '#/components/parameters/username'
+    get:
+      tags:
+        - Scans
+        - Users
+      description: Get all scans made by a user
+      responses:
+        '200':
+          description: All the scans by user in request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scan'
+          
 components:
   parameters:
     q:
@@ -1164,77 +1138,83 @@ components:
       name: sort
       in: query
       required: false
-      description: "Sort results by: 'visits', 'date', 'popularity'."
+      description: 'Sort results by: ''visits'', ''date'', ''popularity''.'
       schema:
         type: string
     order:
       name: order
       in: query
       required: false
-      description: "Sorting order: 'desc', 'asc' (Defaults to desc)."
+      description: 'Sorting order: ''desc'', ''asc'' (Defaults to desc).'
       schema:
         type: string
     featured:
       name: featured
       in: query
       required: false
-      description: "Filter featured object: 0: Non-featured, 1: featured"
+      description: 'Filter featured object: 0: Non-featured, 1: featured'
       schema:
         type: string
     support:
       name: support
       in: query
       required: false
-      description: "Filter printing support-free objects: 1: support-free"
+      description: 'Filter printing support-free objects: 1: support-free'
       schema:
         type: string
     cat:
       name: cat
       in: query
       required: false
-      description: "Filter object of a certain category, by the category id. eg. cat={category_id}"
+      description: >-
+        Filter object of a certain category, by the category id. eg.
+        cat={category_id}
       schema:
         type: string
     complexity:
       name: complexity
       in: query
       required: false
-      description: "Filter object difficulty (How hard to build) : 'eas', 'med', 'diff'"
+      description: 'Filter object difficulty (How hard to build) : ''eas'', ''med'', ''diff'''
       schema:
         type: string
     tech:
       name: tech
       in: query
       required: false
-      description: "Filter printing technology recommanded for the object: eg. 'DLP/SLA'"
+      description: 'Filter printing technology recommanded for the object: eg. ''DLP/SLA'''
       schema:
         type: string
     remix:
       name: remix
       in: query
       required: false
-      description: "License filter: the designer accepted his object the remixed."
+      description: 'License filter: the designer accepted his object the remixed.'
       schema:
         type: string
     commercial_use:
       name: commercial_use
       in: query
       required: false
-      description: "License filter: the designer accepted commercial use of his object."
+      description: 'License filter: the designer accepted commercial use of his object.'
       schema:
         type: string
     exclusive:
       name: exclusive
       in: query
       required: false
-      description: "License filter: this object should be shared exclusivly on MyMiniFactory."
+      description: >-
+        License filter: this object should be shared exclusivly on
+        MyMiniFactory.
       schema:
         type: string
     store:
       name: store
       in: query
       required: false
-      description: "Store License filter: 1: the object has the store license and isn't free. 0: the object hasn't the store license."
+      description: >-
+        Store License filter: 1: the object has the store license and isn't
+        free. 0: the object hasn't the store license.
       schema:
         type: string
     username:
@@ -1301,14 +1281,14 @@ components:
         type: string
       required: true
     comment_id:
-      name : comment_id
+      name: comment_id
       in: path
       required: true
       schema:
         type: integer
       description: Unique ID of the comment
     idea_id:
-      name : idea_id
+      name: idea_id
       in: path
       required: true
       schema:
@@ -1328,11 +1308,13 @@ components:
       required: true
       schema:
         type: string
-
-
-##########################################################################
-#                             Security Oauth2                            #
-##########################################################################
+    scan_id:
+      name: scan_id
+      in: path
+      description: Unique ID of the scan
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -1342,21 +1324,22 @@ components:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: https://auth.myminifactory.com/web/authorize?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
-          tokenUrl: https://auth.myminifactory.com/v1/oauth/?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
+          authorizationUrl: >-
+            https://auth.myminifactory.com/web/authorize?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
+          tokenUrl: >-
+            https://auth.myminifactory.com/v1/oauth/?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
           scopes:
-            basic: |
-             to read private data related to a user (e.g. profile info, private objects) and do actions on his behalf.
-
+            basic: >
+              to read private data related to a user (e.g. profile info, private
+              objects) and do actions on his behalf.
         implicit:
-          authorizationUrl: https://auth.myminifactory.com/web/authorize?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
+          authorizationUrl: >-
+            https://auth.myminifactory.com/web/authorize?client_id=example_client&redirect_uri=http://example.com/callback&response_type=code&state=RANDOM_STRING
           scopes:
-            basic: |
-             to read private data related to a user (e.g. profile info, private objects) and do actions on his behalf.
+            basic: >
+              to read private data related to a user (e.g. profile info, private
+              objects) and do actions on his behalf.
   schemas:
-##########################################################################
-#                            Schemas                                     #
-##########################################################################
     User:
       type: object
       properties:
@@ -1394,8 +1377,9 @@ components:
           description: Sum of all object likes
         following:
           type: boolean
-          description: Whether the connected account is following the user. Available for oauth2 connected user.
-
+          description: >-
+            Whether the connected account is following the user. Available for
+            oauth2 connected user.
     Objects:
       type: object
       properties:
@@ -1405,7 +1389,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Object'
-
     Object:
       type: object
       properties:
@@ -1421,8 +1404,8 @@ components:
         name:
           type: string
         visibility:
-            type: string
-            description: "0: Private, 2: Public"
+          type: string
+          description: '0: Private, 2: Public'
         description:
           type: string
           description: Plain text description
@@ -1441,7 +1424,7 @@ components:
           type: integer
         published_at:
           type: string
-          description: The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
         featured:
           type: boolean
         complexity:
@@ -1478,11 +1461,14 @@ components:
             $ref: '#/components/schemas/License'
         is_liked:
           type: boolean
-          description: Whether this object has been liked. Available for oauth2 connected user.
+          description: >-
+            Whether this object has been liked. Available for oauth2 connected
+            user.
         is_saved:
           type: boolean
-          description: Whether this has is in the user's save for later collection. Available for oauth2 connected user.
-
+          description: >-
+            Whether this has is in the user's save for later collection.
+            Available for oauth2 connected user.
     File:
       type: object
       properties:
@@ -1504,7 +1490,6 @@ components:
         size:
           type: string
           description: Size of the file in Bytes.
-
     Print:
       type: object
       properties:
@@ -1522,10 +1507,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PrintImage'
-
     PrintPayload:
       type: object
-
     PrintWithUploadIds:
       type: object
       properties:
@@ -1543,7 +1526,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImageUploadId'
-
     PrintImage:
       type: object
       properties:
@@ -1585,8 +1567,9 @@ components:
               type: string
         is_print_image_selected:
           type: boolean
-          description: If the print has be selected to appear in the main gallery (Can be null, mean no)
-
+          description: >-
+            If the print has be selected to appear in the main gallery (Can be
+            null, mean no)
     Image:
       type: object
       properties:
@@ -1621,7 +1604,6 @@ components:
               type: string
             height:
               type: string
-
     Collection:
       type: object
       properties:
@@ -1641,14 +1623,13 @@ components:
           type: boolean
         created_at:
           type: string
-          description: The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
         description:
           type: string
         cover_object:
           $ref: '#/components/schemas/Object'
         objects:
           $ref: '#/components/schemas/Objects'
-          
     CollectionPayload:
       type: object
       properties:
@@ -1661,7 +1642,6 @@ components:
       required:
         - name
         - public
-
     OneCollection:
       type: object
       properties:
@@ -1681,12 +1661,11 @@ components:
           type: boolean
         created_at:
           type: string
-          description: The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
         description:
           type: string
         cover_object:
           $ref: '#/components/schemas/Object'
-
     Category:
       type: object
       properties:
@@ -1715,17 +1694,16 @@ components:
                   name:
                     type: string
         parent:
-            type: object
-            properties:
-              id:
-                type: integer
-              slug:
-                type: string
-              name:
-                type: string
+          type: object
+          properties:
+            id:
+              type: integer
+            slug:
+              type: string
+            name:
+              type: string
         objects:
           $ref: '#/components/schemas/Objects'
-
     OneCategory:
       type: object
       properties:
@@ -1754,15 +1732,14 @@ components:
                   name:
                     type: string
         parent:
-            type: object
-            properties:
-              id:
-                type: integer
-              slug:
-                type: string
-              name:
-                type: string
-
+          type: object
+          properties:
+            id:
+              type: integer
+            slug:
+              type: string
+            name:
+              type: string
     ObjectMetadata:
       type: object
       properties:
@@ -1773,7 +1750,7 @@ components:
         visibility:
           type: integer
           default: 2
-          description: "2: Public, 0: Private"
+          description: '2: Public, 0: Private'
         how_to:
           type: string
         dimensions:
@@ -1802,15 +1779,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImageUploadRequest'
-
     ObjectPatchMetadata:
       type: object
       properties:
         visibility:
           type: integer
           default: 2
-          description: "2: Public, 0: Private"
-
+          description: '2: Public, 0: Private'
     PrintMetadata:
       type: object
       properties:
@@ -1824,7 +1799,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FileUploadRequest'
-
     ObjectUpload:
       type: object
       properties:
@@ -1844,7 +1818,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImageUploadId'
-
     ObjectUploadStatus:
       type: object
       properties:
@@ -1860,15 +1833,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImageUploadStatus'
-
     FileUploadRequest:
-     type: object
-     properties:
-      filename:
-        type: string
-      size:
-        type: integer
-
+      type: object
+      properties:
+        filename:
+          type: string
+        size:
+          type: integer
     ImageUploadRequest:
       type: object
       properties:
@@ -1876,7 +1847,6 @@ components:
           type: string
         size:
           type: integer
-
     FileUploadStatus:
       type: object
       properties:
@@ -1886,7 +1856,6 @@ components:
           type: string
         status:
           type: string
-
     ImageUploadStatus:
       type: object
       properties:
@@ -1896,7 +1865,6 @@ components:
           type: string
         status:
           type: string
-
     FileUploadId:
       type: object
       properties:
@@ -1904,7 +1872,6 @@ components:
           type: string
         filename:
           type: string
-
     ImageUploadId:
       type: object
       properties:
@@ -1912,16 +1879,16 @@ components:
           type: string
         filename:
           type: string
-
     License:
       type: object
       properties:
         type:
           type: string
-          description: "Possible values are: 'mention', 'remix', 'commercial-use', 'exclusivity', 'share', 'store'"
+          description: >-
+            Possible values are: 'mention', 'remix', 'commercial-use',
+            'exclusivity', 'share', 'store'
         value:
           type: boolean
-
     Comment:
       type: object
       properties:
@@ -1933,7 +1900,7 @@ components:
           type: integer
         date_posted:
           type: string
-          description: The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
         is_print:
           type: boolean
         status:
@@ -1974,34 +1941,65 @@ components:
         material:
           type: string
     Idea:
-        type: object
-        properties:
-          id:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        title:
+          type: string
+        instigator:
+          $ref: '#/components/schemas/User'
+        description:
+          type: string
+        images:
+          $ref: '#/components/schemas/Image'
+        tags:
+          type: array
+          items:
+            type: string
+        votes:
+          type: integer
+        date_created:
+          type: string
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+        deadline_date:
+          type: string
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+        status:
+          type: string
+        coolab:
+          type: boolean
+          description: The initiator allows collaboration on their project or not
+    Scan:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+        stwObject_id:
+          type: integer
+        user_id:
+          type: integer
+        dateCreated:
+          type: string
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+        dateModified:
+          type: string
+          description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+        sourceUrl:
+          type: string
+        images:
+          type: array
+          items:
             type: integer
-          url:
-            type: string
-          title:
-            type: string
-          instigator:
-            $ref: '#/components/schemas/User'
-          description:
-            type: string
-          images:
-            $ref: '#/components/schemas/Image'
-          tags:
-            type: array
-            items:
-              type: string
-          votes:
-            type: integer
-          date_created:
-            type: string
-            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
-          deadline_date:
-            type: string
-            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
-          status:
-            type: string
-          coolab:
-            type: boolean
-            description: 'The initiator allows collaboration on their project or not'
+            description: Unique ID of image
+    ScanStatus:
+      type: string
+      enum: [STATUS_PENDING,
+          	STATUS_QUEUED,
+          	STATUS_PROCESSING,
+            STATUS_COMPLETE]
+

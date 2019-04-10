@@ -1089,11 +1089,6 @@ paths:
                   items:
                     type: string
                     format: binary
-                fileIds:
-                  description: Optional ids for multi-file uploads
-                  type: array
-                  items:
-                    type: string
             examples:
               single-image:
                 summary: Upload an image
@@ -1119,22 +1114,15 @@ paths:
                 properties:
                   scan_id:
                     type: integer
-                  files:
+                  images:
                     type: array
                     items:
                       type: object
                       properties:
-                        id:
+                        url:
+                          type: string
+                        image_id:
                           type: integer
-                        images:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              url:
-                                type: string
-                              image_id:
-                                type: integer
   '/scan/{scan_id}/image/{image_id}':
     parameters:
       - $ref: '#/components/parameters/scan_id'
@@ -1145,7 +1133,7 @@ paths:
       description: Remove image from a scan
       responses:
         '202':
-          description: Image successfully deleted.
+          description: Image deleted
           content:
             text/plain:
               schema:
@@ -2066,5 +2054,6 @@ components:
             STATUS_QUEUED,
             STATUS_PROCESSING,
             STATUS_COMPLETE]
+
 
 

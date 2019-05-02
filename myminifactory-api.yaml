@@ -1370,6 +1370,8 @@ components:
           type: string
         avatar_thumbnail_url:
           type: string
+        cover_url:
+          type: string
         bio:
           type: string
         website:

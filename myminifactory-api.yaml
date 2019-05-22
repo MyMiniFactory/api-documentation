@@ -1370,6 +1370,8 @@ components:
           type: string
         avatar_thumbnail_url:
           type: string
+        cover_url:
+          type: string
         bio:
           type: string
         website:
@@ -1476,6 +1478,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/License'
+        license: 
+          type: string
+          description: Name and description of the license
         is_liked:
           type: boolean
           description: Whether this object has been liked. Available for oauth2 connected user.

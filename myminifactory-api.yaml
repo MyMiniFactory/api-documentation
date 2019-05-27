@@ -502,7 +502,7 @@ paths:
        - oauth2:
          - basic
       parameters:
-        - $ref: '#/components/schemas/ObjectPatchMetadata'
+        - $ref: '#/components/parameters/object_fields'
       tags:
         - Objects
         - Upload
@@ -1328,6 +1328,13 @@ components:
       required: true
       schema:
         type: string
+    object_fields:
+      name: fields
+      in: body
+      description: Representation of an Object. Only the given fields will be patched
+      required: true
+      schema:
+        $ref: '#/components/schemas/ObjectPatchMetadata'
 
 
 ##########################################################################

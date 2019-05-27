@@ -36,6 +36,7 @@ paths:
       - $ref: '#/components/parameters/commercial_use'
       - $ref: '#/components/parameters/exclusive'
     get:
+      operationId: getSearch
       security:
        - oauth2:
          - basic
@@ -63,6 +64,7 @@ paths:
 #########################################
   /user:
     get:
+      operationId: getMe
       security:
        - oauth2:
          - basic
@@ -81,6 +83,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/username'
     get:
+      operationId: getUser
       security:
        - oauth2:
          - basic
@@ -102,6 +105,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFollowing
       security:
        - oauth2:
          - basic
@@ -130,6 +134,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFollowers
       security:
        - oauth2:
          - basic
@@ -158,6 +163,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserObjects
       security:
        - oauth2:
          - basic
@@ -180,6 +186,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserObjectsLiked
       security:
        - oauth2:
          - basic
@@ -209,6 +216,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserCollections
       security:
        - oauth2:
          - basic
@@ -239,6 +247,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserCollection
       security:
        - oauth2:
          - basic
@@ -259,6 +268,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFeed
       security:
        - oauth2:
          - basic
@@ -291,6 +301,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
+      operationId: getComment
       security:
        - oauth2:
          - basic
@@ -305,6 +316,7 @@ paths:
               schema:
                   $ref: '#/components/schemas/Comment'
     patch:
+      operationId: patchComment
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
@@ -326,6 +338,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Comment'
     delete:
+      operationId: deleteComment
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
@@ -347,6 +360,7 @@ paths:
 
   /comment:
     post:
+      operationId: postComment
       security:
        - oauth2:
          - basic
@@ -370,6 +384,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
+      operationId: getCommentReplies
       security:
        - oauth2:
          - basic
@@ -396,6 +411,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getObjectComments
       security:
        - oauth2:
          - basic
@@ -423,6 +439,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getPrintjobComments
       security:
        - oauth2:
          - basic
@@ -449,6 +466,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/idea_id'
     get:
+      operationId: getIdeaComments
       security:
        - oauth2:
          - basic
@@ -479,6 +497,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getObject
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
@@ -498,6 +517,7 @@ paths:
                 $ref: '#/components/schemas/Object'
 
     patch:
+      operationId: patchObject
       security:
        - oauth2:
          - basic
@@ -517,6 +537,7 @@ paths:
 
   /object:
     post:
+      operationId: postObject
       security:
        - oauth2:
          - basic
@@ -589,6 +610,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getObjectFiles
       security:
        - oauth2:
          - basic
@@ -618,6 +640,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getObjectPrints
       security:
        - oauth2:
          - basic
@@ -645,6 +668,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectPrint
       security:
        - oauth2:
          - basic
@@ -683,6 +707,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: postObjectUploadstatus
       security:
        - oauth2:
          - basic
@@ -706,6 +731,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectFile
       security:
         - oauth_authorization_code:
           - basic
@@ -743,6 +769,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectImage
       security:
         - oauth_authorization_code:
           - basic
@@ -780,6 +807,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/file_id'
     get:
+      operationId: getObjectFile
       security:
         - oauth_authorization_code:
           - basic
@@ -802,6 +830,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
+      operationId: postObjectFileBinary
       security:
        - oauth2:
          - basic
@@ -830,6 +859,7 @@ paths:
 
   /file (multipart/form-data):
     post:
+      operationId: postObjectFileMultipart
       security:
        - oauth2:
          - basic
@@ -862,6 +892,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
+      operationId: postObjectFileBinary
       security:
        - oauth2:
          - basic
@@ -897,6 +928,7 @@ paths:
 
   /image (multipart/form-data):
     post:
+      operationId: postObjectImageMultipart
       security:
        - oauth2:
          - basic
@@ -929,6 +961,7 @@ paths:
 #########################################
   /collection:
     post:
+        operationId: postCollection
         security:
          - oauth2:
            - basic
@@ -953,6 +986,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getCollections
       tags:
         - Collections
       description: Get all the public collections
@@ -974,6 +1008,7 @@ paths:
 
   /collections/{collection_id}:
     get:
+      operationId: getCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/page'
@@ -990,6 +1025,7 @@ paths:
                 $ref: '#/components/schemas/Collection'
                 
     patch:
+      operationId: patchCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
@@ -1012,6 +1048,7 @@ paths:
                 $ref: '#/components/schemas/OneCollection'
                 
     delete:
+      operationId: deleteCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
@@ -1026,6 +1063,7 @@ paths:
           
   /collections/{collection_id}/objects:
     get:
+      operationId: getCollectionObjects
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/page'
@@ -1044,6 +1082,7 @@ paths:
                 
   /collections/{collection_id}/object/{object_id}:
     delete:
+      operationId: deleteCollectionObject
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/object_id'
@@ -1067,6 +1106,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getCategories
       tags:
         - Categories
       description: Get information about a category.
@@ -1089,6 +1129,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/category_id'
     get:
+      operationId: getCategorie
       tags:
         - Categories
       description: Get information about a category.
@@ -1107,6 +1148,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
+      operationId: getTagObjects
       tags:
         - Objects
         - Tags
@@ -1122,6 +1164,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
+      operationId: getTagIdeas
       tags:
         - Ideas
         - Tags

@@ -892,7 +892,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
-      operationId: postObjectFileBinary
+      operationId: postObjectImageBinary
       security:
        - oauth2:
          - basic
@@ -1177,6 +1177,104 @@ paths:
               schema:
                 $ref: '#/components/schemas/Idea'
 
+#########################################
+#             Competitions              #
+#########################################
+  /competitions:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+      - $ref: '#/components/parameters/competition_sort'
+      - $ref: '#/components/parameters/order'
+    get:
+      operationId: getCompetitions
+      tags:
+        - Competitions
+      description: List all competitions
+      responses:
+        200:
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Competition'
+
+  /competition:
+    post:
+      operationId: postCompetition
+      tags:
+        - Competitions
+      description: Post a new competition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPayload'
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+
+  /competitions/{slug}:
+    parameters:
+      - $ref: '#/components/parameters/competition_slug'
+    get:
+      operationId: getCompetition
+      tags:
+        - Competitions
+      description: Get informations about a competition
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+    patch:
+      operationId: patchCompetition
+      tags:
+        - Competitions
+      description: Modify an existing competition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPayload'
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+    delete:
+      operationId: deleteCompetition
+      tags:
+        - Competitions
+      description: Delete a competition
+      responses:
+        200:
+          description: Done.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
+
 ##########################################################################
 #                                     Paths                              #
 ##########################################################################
@@ -1373,12 +1471,25 @@ components:
         type: string
     object_fields:
       name: fields
-      in: body
+      in: query
       description: Representation of an Object. Only the given fields will be patched
       required: true
       schema:
         $ref: '#/components/schemas/ObjectPatchMetadata'
-
+    competition_slug:
+      name: slug
+      in: path
+      description: Slug name of a competition
+      required: true
+      schema:
+        type: string
+    competition_sort:
+      name: sort
+      in: query
+      required: false
+      description: "Sort results by: 'date', 'status'."
+      schema:
+        type: string
 
 ##########################################################################
 #                             Security Oauth2                            #
@@ -2060,3 +2171,53 @@ components:
           coolab:
             type: boolean
             description: 'The initiator allows collaboration on their project or not'
+    Competition:
+        type: object
+        properties:
+          id:
+            type: integer
+          url:
+            type: string
+          title:
+            type: string
+          summary:
+            type: string
+          date_created:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          submission_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          voting_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          status:
+            type: string
+          sections:
+            $ref: '#/components/schemas/CompetitionSection'
+    CompetitionPayload:
+        type: object
+        properties:
+          title:
+            type: string
+          summary:
+            type: string
+          submission_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          voting_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          status:
+            type: string
+          sections:
+            $ref: '#/components/schemas/CompetitionSection'
+    CompetitionSection:
+        type: object
+        properties:
+          id:
+            type: integer
+          type:
+            type: string
+          body:
+            type: string

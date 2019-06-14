@@ -1313,7 +1313,7 @@ components:
       name: order
       in: query
       required: false
-      description: "Sorting order: 'desc', 'asc' (Defaults to desc)."
+      description: "Sorting order: 'desc', 'asc'. Defaults to desc."
       schema:
         type: string
     featured:
@@ -1497,7 +1497,8 @@ components:
       required: false
       description: "Representation of all status wanted. Default is all."
       schema:
-        type: integer
+        items:
+          type: string
 
 ##########################################################################
 #                             Security Oauth2                            #
@@ -2200,19 +2201,25 @@ components:
             type: string
             description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
           status:
-            type: string
+            type: integer
           entries_count:
             type: integer
-          prize:
-            $ref: '#/components/schemas/Prize'
+          prizes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Prize'
           sections:
-            $ref: '#/components/schemas/CompetitionSection'
+            type: array
+            items:
+              $ref: '#/components/schemas/CompetitionSection'
           viewable_entries:
             type: integer
-          big_brand:
+          brand:
             $ref: '#/components/schemas/BigBrand'
-          winner:
-            $ref: '#/components/schemas/Winner'
+          winners:
+            type: array
+            items:
+              $ref: '#/components/schemas/Winner'
     CompetitionPayload:
         type: object
         properties:
@@ -2242,11 +2249,9 @@ components:
     BigBrand:
         type: object
         properties:
-          id:
-            type: integer
           name:
             type: string
-          logo:
+          logo_url:
             type: string
     Prize:
         type: object
@@ -2260,20 +2265,11 @@ components:
     Winner:
         type: object
         properties:
-          url:
+          object_url:
             type: string
-          img:
+          object_thumbnail_url:
             type: string
-          title:
+          object_name:
             type: string
           user:
-            $ref: '#/components/schemas/WinnerUser'
-    WinnerUser:
-        type: object
-        properties:
-          name:
-            type: string
-          profile_url:
-            type: string
-          avatar_url:
-            type: string
+            $ref: '#/components/schemas/User'

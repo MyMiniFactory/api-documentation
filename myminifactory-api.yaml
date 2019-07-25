@@ -35,6 +35,9 @@ paths:
       - $ref: '#/components/parameters/remix'
       - $ref: '#/components/parameters/commercial_use'
       - $ref: '#/components/parameters/exclusive'
+      - $ref: '#/components/parameters/stw'
+      - $ref: '#/components/parameters/print'
+      - $ref: '#/components/parameters/feed'
     get:
       operationId: getSearch
       security:
@@ -662,7 +665,7 @@ paths:
                   items:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Print'
+                      $ref: '#/components/schemas/ObjectPrint'
 
   /objects/{object_id}/print (application/json):
     parameters:
@@ -723,6 +726,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/ObjectUploadStatus'
 
+
+#########################################
+#               Prints                  #
+#########################################
+
+  /prints/{print_id}:
+      parameters:
+        - $ref: '#/components/parameters/print_id'
+      get:
+        operationId: getPrint
+        security:
+        - oauth2:
+          - basic
+        - key: []
+        tags:
+          - Prints
+        description: Get information about a print.
+        responses:
+          200:
+            description: The 3D print object
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Print'
+
+      patch:
+        operationId: patchPrint
+        parameters:
+          - $ref: '#/components/parameters/print_id'
+        security:
+        - oauth2:
+          - basic
+        tags:
+          - Prints
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintPayload'
+        description: "Edit a print"
+        responses:
+          201:
+            description: The print information.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Print'
+
+      delete:
+        operationId: deletePrint
+        parameters:
+          - $ref: '#/components/parameters/print_id'
+        security:
+        - oauth2:
+          - basic
+        tags:
+          - Prints
+        description: "Delete a print"
+        responses:
+          204:
+            description: ''
 
 #########################################
 #               Files                   #
@@ -892,7 +956,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
-      operationId: postObjectFileBinary
+      operationId: postObjectImageBinary
       security:
        - oauth2:
          - basic
@@ -1249,7 +1313,7 @@ components:
       name: tech
       in: query
       required: false
-      description: "Filter printing technology recommanded for the object: eg. 'DLP/SLA'"
+      description: "Filter printing technology recommended for the object: eg. 'DLP/SLA'"
       schema:
         type: string
     remix:
@@ -1273,6 +1337,27 @@ components:
       description: "License filter: this object should be shared exclusivly on MyMiniFactory."
       schema:
         type: string
+    stw:
+      name: stw
+      in: query
+      required: false
+      description: "Scan The World filter: this object is in the category scan the world. Same as cat=104"
+      schema:
+        type: string
+    print:
+      name: print
+      in: query
+      required: false
+      description: "Print filter: 1: the object is a picture of print"
+      schema:
+        type: string
+    feed:
+      name: feed
+      in: query
+      required: false
+      description: "Available ONLY with Oauth connected User. Not with API key. Feed filter: 1: this object has been upload for a designer the user follows"
+      schema:
+        type: string
     store:
       name: store
       in: query
@@ -1291,6 +1376,13 @@ components:
       name: object_id
       in: path
       description: The object identifier number
+      schema:
+        type: number
+      required: true
+    print_id:
+      name: print_id
+      in: path
+      description: The print identifier number
       schema:
         type: number
       required: true
@@ -1373,11 +1465,18 @@ components:
         type: string
     object_fields:
       name: fields
-      in: body
+      in: query
       description: Representation of an Object. Only the given fields will be patched
       required: true
       schema:
         $ref: '#/components/schemas/ObjectPatchMetadata'
+    print_fields:
+      name: fields
+      in: query
+      description: Representation of an Print. Only the given fields will be patched
+      required: true
+      schema:
+        $ref: '#/components/schemas/PrintMetadata'
 
 
 ##########################################################################
@@ -1414,7 +1513,11 @@ components:
           type: string
         name:
           type: string
+        is_premium:
+          type: boolean
         profile_url:
+          type: string
+        profile_settings_url:
           type: string
         avatar_url:
           type: string
@@ -1422,9 +1525,9 @@ components:
           type: string
         cover_url:
           type: string
-        bio:
-          type: string
         website:
+          type: string
+        bio:
           type: string
         followings:
           type: integer
@@ -1432,6 +1535,11 @@ components:
         followers:
           type: integer
           description: Number of followers accounts
+        likes:
+          type: integer
+          description: Sum of all object likes
+        views:
+          type: integer
         objects:
           type: integer
           description: Number of published objects
@@ -1441,9 +1549,10 @@ components:
         total_collections:
           type: integer
           description: Number of public collections
-        likes:
-          type: integer
-          description: Sum of all object likes
+        printers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Printers'
         following:
           type: boolean
           description: Whether the connected account is following the user. Available for oauth2 connected user.
@@ -1472,9 +1581,18 @@ components:
           type: integer
         name:
           type: string
-        visibility:
+        status:
+            type: integer
+            description: "Can be one of 0: uploaded, 1: under_review, 2: approved, 3: rejected. Default 0: uploaded"
+        status_name:
             type: string
-            description: "0: Private, 2: Public"
+            description: "Can be one of uploaded, under_review, approved or rejected. Default uploaded"
+        visibility:
+            type: integer
+            description: "Can be one of 0: private, 2: public. Default 2: public"
+        visibility_name:
+            type: string
+            description: "Can be one of public or private. Default public"
         description:
           type: string
           description: Plain text description
@@ -1498,6 +1616,10 @@ components:
           type: boolean
         complexity:
           type: integer
+          description: "Can be one of 1: very easy, 2: easy, 3: medium, 4: difficult or 5: very difficult"
+        complexity_name:
+          type: string
+          description: "Can be one of very easy, easy, medium, difficult or very difficult"
         dimensions:
           type: string
         material_quantity:
@@ -1547,26 +1669,55 @@ components:
           type: string
         description:
           type: string
-        download_url:
-          type: string
-          description: Available ONLY with Oauth connected User. Not with API key.
-        viewer_url:
-          type: string
-          description: Reduced version of the 3D file for preview (Format stl of ply).
-        thumbnail_url:
-          type: string
-          description: Render image thumbnail URL
+        status:
+            type: integer
+            description: "Can be one of 0: not_uploaded, 1: under_review, 2: approved, 3: rejected. Default 1: under_review"
+        status_name:
+            type: string
+            description: "Can be one of not_uploaded, under_review, approved or rejected. Default under_review"
         size:
           type: string
           description: Size of the file in Bytes.
-
+        thumbnail_url:
+          type: string
+          description: Render image thumbnail URL
+        viewer_url:
+          type: string
+          description: Reduced version of the 3D file for preview (Format stl of ply).
+        download_url:
+          type: string
+          description: Available ONLY with Oauth connected User. Not with API key.
+        
     Print:
       type: object
       properties:
         id:
           type: integer
-        object_id:
-          type: integer
+        description:
+          type: string
+        status:
+            type: integer
+            description: "Can be one of 1: pending, 2: approved, 3: rejected. Default 1: pending"
+        status_name:
+            type: string
+            description: "Can be one of pending, approved or rejected. Default pending"
+        material:
+          $ref: '#/components/schemas/Material'
+        printer:
+          $ref: '#/components/schemas/Printer'
+        is_liked:
+          type: boolean
+          description: Whether this print has been liked. Available for oauth2 connected user.
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrintImage'
+        user:
+          $ref: '#/components/schemas/User'
+
+    PrintPayload:
+      type: object
+      properties:
         description:
           type: string
         material:
@@ -1576,10 +1727,26 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/PrintImage'
+            $ref: '#/components/schemas/ImageUploadId'
 
-    PrintPayload:
+    ObjectPrint:
       type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        material:
+          $ref: '#/components/schemas/Material'
+        printer:
+          $ref: '#/components/schemas/Printer'
+        is_liked:
+          type: boolean
+          description: Whether this print has been liked. Available for oauth2 connected user.
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrintImage'
 
     PrintWithUploadIds:
       type: object
@@ -1875,7 +2042,7 @@ components:
           type: string
         printer:
           type: string
-        files:
+        images:
           type: array
           items:
             $ref: '#/components/schemas/FileUploadRequest'
@@ -2060,3 +2227,54 @@ components:
           coolab:
             type: boolean
             description: 'The initiator allows collaboration on their project or not'
+
+    Material:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    Printer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        model:
+          type: string
+        brand:
+          type: string
+        image:
+          type: string
+        website:
+          type: string
+        automatic_slicing:
+          type: boolean
+        nozzle_diameter:
+          type: number
+        premium:
+          type: boolean
+        dimensions:
+          type: array
+          items:
+            type: object
+            properties:
+              x:
+                type: number
+              y:
+                type: number
+              z:
+                type: number
+
+    Printers:
+      type: object
+      properties:
+        total_count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Printer'

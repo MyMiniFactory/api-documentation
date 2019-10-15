@@ -291,7 +291,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Object'
-                      
+
 #########################################
 #               Comments                #
 #########################################
@@ -1023,7 +1023,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-                
+
     patch:
       operationId: patchCollection
       parameters:
@@ -1046,7 +1046,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OneCollection'
-                
+
     delete:
       operationId: deleteCollection
       parameters:
@@ -1060,7 +1060,7 @@ paths:
       responses:
         204:
           description: ''
-          
+
   /collections/{collection_id}/objects:
     get:
       operationId: getCollectionObjects
@@ -1079,7 +1079,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-                
+
   /collections/{collection_id}/object/{object_id}:
     delete:
       operationId: deleteCollectionObject
@@ -1095,7 +1095,7 @@ paths:
       responses:
         204:
           description: ''
-                
+
 
 #########################################
 #               Categories              #
@@ -1186,6 +1186,7 @@ paths:
       - $ref: '#/components/parameters/per_page'
       - $ref: '#/components/parameters/competition_sort'
       - $ref: '#/components/parameters/order'
+      - $ref: '#/components/parameters/competition_status'
     get:
       operationId: getCompetitions
       tags:
@@ -1312,7 +1313,7 @@ components:
       name: order
       in: query
       required: false
-      description: "Sorting order: 'desc', 'asc' (Defaults to desc)."
+      description: "Sorting order: 'desc', 'asc'. Defaults to desc."
       schema:
         type: string
     featured:
@@ -1487,9 +1488,17 @@ components:
       name: sort
       in: query
       required: false
-      description: "Sort results by: 'date', 'status'."
+      description: "Sort results by: 'date', 'status'. Default is status."
       schema:
         type: string
+    competition_status:
+      name: status
+      in: query
+      required: false
+      description: "Representation of all status wanted. Default is all."
+      schema:
+        items:
+          type: string
 
 ##########################################################################
 #                             Security Oauth2                            #
@@ -1639,7 +1648,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/License'
-        license: 
+        license:
           type: string
           description: Name and description of the license
         is_liked:
@@ -1814,7 +1823,7 @@ components:
           $ref: '#/components/schemas/Object'
         objects:
           $ref: '#/components/schemas/Objects'
-          
+
     CollectionPayload:
       type: object
       properties:
@@ -2192,9 +2201,25 @@ components:
             type: string
             description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
           status:
-            type: string
+            type: integer
+          entries_count:
+            type: integer
+          prizes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Prize'
           sections:
-            $ref: '#/components/schemas/CompetitionSection'
+            type: array
+            items:
+              $ref: '#/components/schemas/CompetitionSection'
+          viewable_entries:
+            type: integer
+          brand:
+            $ref: '#/components/schemas/BigBrand'
+          winners:
+            type: array
+            items:
+              $ref: '#/components/schemas/Winner'
     CompetitionPayload:
         type: object
         properties:
@@ -2221,3 +2246,30 @@ components:
             type: string
           body:
             type: string
+    BigBrand:
+        type: object
+        properties:
+          name:
+            type: string
+          logo_url:
+            type: string
+    Prize:
+        type: object
+        properties:
+          value:
+            type: integer
+          img:
+            type: string
+          text:
+            type: string
+    Winner:
+        type: object
+        properties:
+          object_url:
+            type: string
+          object_thumbnail_url:
+            type: string
+          object_name:
+            type: string
+          user:
+            $ref: '#/components/schemas/User'

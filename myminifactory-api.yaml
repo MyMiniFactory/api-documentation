@@ -291,7 +291,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Object'
-                      
+
 #########################################
 #               Comments                #
 #########################################
@@ -349,7 +349,7 @@ paths:
       description: "Delete a comment"
       responses:
         200:
-          description: Done.
+          description: Feedback
           content:
             application/json:
               schema:
@@ -1023,7 +1023,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-                
+
     patch:
       operationId: patchCollection
       parameters:
@@ -1046,7 +1046,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OneCollection'
-                
+
     delete:
       operationId: deleteCollection
       parameters:
@@ -1060,7 +1060,7 @@ paths:
       responses:
         204:
           description: ''
-          
+
   /collections/{collection_id}/objects:
     get:
       operationId: getCollectionObjects
@@ -1079,7 +1079,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-                
+
   /collections/{collection_id}/object/{object_id}:
     delete:
       operationId: deleteCollectionObject
@@ -1095,7 +1095,7 @@ paths:
       responses:
         204:
           description: ''
-                
+
 
 #########################################
 #               Categories              #
@@ -1176,6 +1176,160 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Idea'
+
+
+#########################################
+#               Posts                   #
+#########################################
+  /posts/{post_id}:
+    parameters:
+      - $ref: '#/components/parameters/post_id'
+    get:
+      operationId: getPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Get a post
+      responses:
+        '200':
+          description: The requested post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    patch:
+      operationId: patchPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: "Edit an existing post and get back the new version of this post."
+      requestBody:
+        description: "Representation of Post. Only the given fields will be patched."
+        content:
+          application/json:
+            schema:
+              type: object
+              description: "Representation of Post. Only the given fields will be patched"
+              properties:
+                visibility:
+                  type: integer
+                  default: 2
+                  description: "2: Public, 1: Draft, 0: Private"
+      responses:
+        '200':
+          description: The edited post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    delete:
+      operationId: deletePost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Delete a post
+      responses:
+        '200':
+          description: Feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    pattern: "ok"
+
+  /post:
+    post:
+      operationId: postPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Upload a new post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        '200':
+          description: The new post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+  /blog/posts:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+    get:
+      operationId: getBlogPosts
+      security:
+        - oauth2:
+          - basic
+        - key: []
+      tags:
+        - Post
+      description: Get the blog posts
+      responses:
+        200:
+          description: List of blog post
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+
+  /users/{username}/posts:
+    parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+    get:
+      operationId: getUserPosts
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Get the user posts
+      responses:
+        200:
+          description: List of user post
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+
+
 
 ##########################################################################
 #                                     Paths                              #
@@ -1378,6 +1532,13 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/ObjectPatchMetadata'
+    post_id:
+      name: post_id
+      in: path
+      description: the id of the post
+      required: true
+      schema:
+        type: string
 
 
 ##########################################################################
@@ -1528,7 +1689,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/License'
-        license: 
+        license:
           type: string
           description: Name and description of the license
         is_liked:
@@ -1703,7 +1864,7 @@ components:
           $ref: '#/components/schemas/Object'
         objects:
           $ref: '#/components/schemas/Objects'
-          
+
     CollectionPayload:
       type: object
       properties:
@@ -2060,3 +2221,33 @@ components:
           coolab:
             type: boolean
             description: 'The initiator allows collaboration on their project or not'
+
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        body:
+          type: string
+        slug:
+          type: string
+        url:
+          type: string
+        cover_url:
+          type: string
+        published_at:
+          type: string
+        likes:
+          type: integer
+        visibility:
+          type: integer
+        comments_visible:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/User'
+        is_liked:
+          type: boolean
+          default: false
+          description: Whether this object has been liked. Available for oauth2 connected user.

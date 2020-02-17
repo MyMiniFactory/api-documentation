@@ -36,6 +36,7 @@ paths:
       - $ref: '#/components/parameters/commercial_use'
       - $ref: '#/components/parameters/exclusive'
     get:
+      operationId: getSearch
       security:
        - oauth2:
          - basic
@@ -63,6 +64,7 @@ paths:
 #########################################
   /user:
     get:
+      operationId: getMe
       security:
        - oauth2:
          - basic
@@ -81,6 +83,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/username'
     get:
+      operationId: getUser
       security:
        - oauth2:
          - basic
@@ -102,6 +105,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFollowing
       security:
        - oauth2:
          - basic
@@ -130,6 +134,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFollowers
       security:
        - oauth2:
          - basic
@@ -158,6 +163,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserObjects
       security:
        - oauth2:
          - basic
@@ -180,6 +186,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserObjectsLiked
       security:
        - oauth2:
          - basic
@@ -209,6 +216,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserCollections
       security:
        - oauth2:
          - basic
@@ -239,6 +247,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserCollection
       security:
        - oauth2:
          - basic
@@ -259,6 +268,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getUserFeed
       security:
        - oauth2:
          - basic
@@ -281,7 +291,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Object'
-                      
+
 #########################################
 #               Comments                #
 #########################################
@@ -291,6 +301,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
+      operationId: getComment
       security:
        - oauth2:
          - basic
@@ -305,6 +316,7 @@ paths:
               schema:
                   $ref: '#/components/schemas/Comment'
     patch:
+      operationId: patchComment
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
@@ -326,6 +338,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Comment'
     delete:
+      operationId: deleteComment
       parameters:
         - $ref: '#/components/parameters/comment_id'
       security:
@@ -336,7 +349,7 @@ paths:
       description: "Delete a comment"
       responses:
         200:
-          description: Done.
+          description: Feedback
           content:
             application/json:
               schema:
@@ -347,6 +360,7 @@ paths:
 
   /comment:
     post:
+      operationId: postComment
       security:
        - oauth2:
          - basic
@@ -370,6 +384,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/comment_id'
     get:
+      operationId: getCommentReplies
       security:
        - oauth2:
          - basic
@@ -396,6 +411,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getObjectComments
       security:
        - oauth2:
          - basic
@@ -423,6 +439,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getPrintjobComments
       security:
        - oauth2:
          - basic
@@ -449,6 +466,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/idea_id'
     get:
+      operationId: getIdeaComments
       security:
        - oauth2:
          - basic
@@ -479,6 +497,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: getObject
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
@@ -498,11 +517,12 @@ paths:
                 $ref: '#/components/schemas/Object'
 
     patch:
+      operationId: patchObject
       security:
        - oauth2:
          - basic
       parameters:
-        - $ref: '#/components/schemas/ObjectPatchMetadata'
+        - $ref: '#/components/parameters/object_fields'
       tags:
         - Objects
         - Upload
@@ -517,6 +537,7 @@ paths:
 
   /object:
     post:
+      operationId: postObject
       security:
        - oauth2:
          - basic
@@ -589,6 +610,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getObjectFiles
       security:
        - oauth2:
          - basic
@@ -618,6 +640,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getObjectPrints
       security:
        - oauth2:
          - basic
@@ -645,6 +668,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectPrint
       security:
        - oauth2:
          - basic
@@ -683,6 +707,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     get:
+      operationId: postObjectUploadstatus
       security:
        - oauth2:
          - basic
@@ -706,6 +731,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectFile
       security:
         - oauth_authorization_code:
           - basic
@@ -743,6 +769,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/object_id'
     post:
+      operationId: postObjectImage
       security:
         - oauth_authorization_code:
           - basic
@@ -780,6 +807,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/file_id'
     get:
+      operationId: getObjectFile
       security:
         - oauth_authorization_code:
           - basic
@@ -802,6 +830,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
+      operationId: postObjectFileBinary
       security:
        - oauth2:
          - basic
@@ -830,6 +859,7 @@ paths:
 
   /file (multipart/form-data):
     post:
+      operationId: postObjectFileMultipart
       security:
        - oauth2:
          - basic
@@ -862,6 +892,7 @@ paths:
     parameters:
        - $ref: '#/components/parameters/upload_id'
     post:
+      operationId: postObjectImageBinary
       security:
        - oauth2:
          - basic
@@ -897,6 +928,7 @@ paths:
 
   /image (multipart/form-data):
     post:
+      operationId: postObjectImageMultipart
       security:
        - oauth2:
          - basic
@@ -929,6 +961,7 @@ paths:
 #########################################
   /collection:
     post:
+        operationId: postCollection
         security:
          - oauth2:
            - basic
@@ -953,6 +986,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getCollections
       tags:
         - Collections
       description: Get all the public collections
@@ -974,6 +1008,7 @@ paths:
 
   /collections/{collection_id}:
     get:
+      operationId: getCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/page'
@@ -988,8 +1023,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-                
+
     patch:
+      operationId: patchCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
@@ -1010,8 +1046,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OneCollection'
-                
+
     delete:
+      operationId: deleteCollection
       parameters:
         - $ref: '#/components/parameters/collection_id'
       security:
@@ -1023,9 +1060,10 @@ paths:
       responses:
         204:
           description: ''
-          
+
   /collections/{collection_id}/objects:
     get:
+      operationId: getCollectionObjects
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/page'
@@ -1041,9 +1079,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objects'
-                
+
   /collections/{collection_id}/object/{object_id}:
     delete:
+      operationId: deleteCollectionObject
       parameters:
         - $ref: '#/components/parameters/collection_id'
         - $ref: '#/components/parameters/object_id'
@@ -1056,7 +1095,7 @@ paths:
       responses:
         204:
           description: ''
-                
+
 
 #########################################
 #               Categories              #
@@ -1067,6 +1106,7 @@ paths:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/per_page'
     get:
+      operationId: getCategories
       tags:
         - Categories
       description: Get information about a category.
@@ -1089,6 +1129,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/category_id'
     get:
+      operationId: getCategorie
       tags:
         - Categories
       description: Get information about a category.
@@ -1107,6 +1148,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
+      operationId: getTagObjects
       tags:
         - Objects
         - Tags
@@ -1122,6 +1164,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tag_name'
     get:
+      operationId: getTagIdeas
       tags:
         - Ideas
         - Tags
@@ -1133,6 +1176,250 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Idea'
+
+#########################################
+#               Posts                   #
+#########################################
+  /posts/{post_id}:
+    parameters:
+      - $ref: '#/components/parameters/post_id'
+    get:
+      operationId: getPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Get a post
+      responses:
+        '200':
+          description: The requested post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    patch:
+      operationId: patchPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: "Edit an existing post and get back the new version of this post."
+      requestBody:
+        description: "Representation of Post. Only the given fields will be patched."
+        content:
+          application/json:
+            schema:
+              type: object
+              description: "Representation of Post. Only the given fields will be patched"
+              properties:
+                visibility:
+                  type: integer
+                  default: 2
+                  description: "2: Public, 1: Draft, 0: Private"
+      responses:
+        '200':
+          description: The edited post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    delete:
+      operationId: deletePost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Delete a post
+      responses:
+        '200':
+          description: Feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    pattern: "ok"
+
+  /post:
+    post:
+      operationId: postPost
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Upload a new post
+      responses:
+        '200':
+          description: The new post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+  /blog/posts:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+    get:
+      operationId: getBlogPosts
+      security:
+        - oauth2:
+          - basic
+        - key: []
+      tags:
+        - Post
+      description: Get the blog posts
+      responses:
+        200:
+          description: List of blog post
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+
+  /users/{username}/posts:
+    parameters:
+      - $ref: '#/components/parameters/username'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+    get:
+      operationId: getUserPosts
+      security:
+        - oauth2:
+            - basic
+        - key: []
+      tags:
+        - Post
+      description: Get the user posts
+      responses:
+        200:
+          description: List of user post
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+
+#########################################
+#             Competitions              #
+#########################################
+  /competitions:
+    parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/per_page'
+      - $ref: '#/components/parameters/competition_sort'
+      - $ref: '#/components/parameters/order'
+    get:
+      operationId: getCompetitions
+      tags:
+        - Competitions
+      description: List all competitions
+      responses:
+        200:
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Competition'
+
+  /competition:
+    post:
+      operationId: postCompetition
+      tags:
+        - Competitions
+      description: Post a new competition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPayload'
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+
+  /competitions/{slug}:
+    parameters:
+      - $ref: '#/components/parameters/competition_slug'
+    get:
+      operationId: getCompetition
+      tags:
+        - Competitions
+      description: Get informations about a competition
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+    patch:
+      operationId: patchCompetition
+      tags:
+        - Competitions
+      description: Modify an existing competition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionPayload'
+      responses:
+        '200':
+          description: Competition object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+    delete:
+      operationId: deleteCompetition
+      tags:
+        - Competitions
+      description: Delete a competition
+      responses:
+        200:
+          description: Done.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
 
 ##########################################################################
 #                                     Paths                              #
@@ -1328,7 +1615,35 @@ components:
       required: true
       schema:
         type: string
+    object_fields:
+      name: fields
+      in: query
+      description: Representation of an Object. Only the given fields will be patched
+      required: true
+      schema:
+        $ref: '#/components/schemas/ObjectPatchMetadata'
+    post_id:
+      name: post_id
+      in: path
+      description: the id of the post
+      required: true
+      schema:
+        type: string
 
+    competition_slug:
+      name: slug
+      in: path
+      description: Slug name of a competition
+      required: true
+      schema:
+        type: string
+    competition_sort:
+      name: sort
+      in: query
+      required: false
+      description: "Sort results by: 'date', 'status'."
+      schema:
+        type: string
 
 ##########################################################################
 #                             Security Oauth2                            #
@@ -1478,7 +1793,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/License'
-        license: 
+        license:
           type: string
           description: Name and description of the license
         is_liked:
@@ -1653,7 +1968,7 @@ components:
           $ref: '#/components/schemas/Object'
         objects:
           $ref: '#/components/schemas/Objects'
-          
+
     CollectionPayload:
       type: object
       properties:
@@ -2010,3 +2325,82 @@ components:
           coolab:
             type: boolean
             description: 'The initiator allows collaboration on their project or not'
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        body:
+          type: string
+        slug:
+          type: string
+        url:
+          type: string
+        cover_url:
+          type: string
+        published_at:
+          type: string
+        likes:
+          type: integer
+        visibility:
+          type: integer
+        comments_visible:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/User'
+        is_liked:
+          type: boolean
+          default: false
+          description: Whether this object has been liked. Available for oauth2 connected user.
+    Competition:
+        type: object
+        properties:
+          id:
+            type: integer
+          url:
+            type: string
+          title:
+            type: string
+          summary:
+            type: string
+          date_created:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          submission_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          voting_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          status:
+            type: string
+          sections:
+            $ref: '#/components/schemas/CompetitionSection'
+    CompetitionPayload:
+        type: object
+        properties:
+          title:
+            type: string
+          summary:
+            type: string
+          submission_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          voting_deadline:
+            type: string
+            description: 'The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.'
+          status:
+            type: string
+          sections:
+            $ref: '#/components/schemas/CompetitionSection'
+    CompetitionSection:
+        type: object
+        properties:
+          id:
+            type: integer
+          type:
+            type: string
+          body:
+            type: string

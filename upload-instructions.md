@@ -33,7 +33,7 @@ Post basic information to create an object and send the list of files that will 
 
 #### Request
 ```
-POST /api/v1/object HTTP/1.1
+POST /api/v2/object HTTP/1.1
 Authorization: Bearer 79f4bd9c-5fa0-4415-819a-eabe28163108
 Content-Type: application/json; charset=utf-8
 Content-Length: 192

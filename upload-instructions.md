@@ -108,7 +108,7 @@ Using the given `upload_id`, post the post the actual file. This request must on
 
 #### Request
 ```
-POST /api/v1/file?upload_id=1589466a6a50a3 HTTP/1.1
+POST /api/v2/file?upload_id=1589466a6a50a3 HTTP/1.1
 Authorization: Bearer 79f4bd9c-5fa0-4415-819a-eabe28163108
 Host: www.myminifactory.com
 Content-Type: application/octet-stream
@@ -143,7 +143,7 @@ If a file is missing you can do Step 2 with its upload_id to upload it again.
 
 #### Request
 ```
-GET /api/v1/object/{id}/upload_status HTTP/1.1
+GET /api/v2/object/{id}/upload_status HTTP/1.1
 Authorization: Bearer 79f4bd9c-5fa0-4415-819a-eabe28163108
 Host: www.myminifactory.com
 Content-Type: application/json; charset=utf-8

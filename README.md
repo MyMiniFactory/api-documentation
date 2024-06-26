@@ -28,13 +28,6 @@ Additionnal instruction to upload files is available
  - [File Upload instructions](https://github.com/MyMiniFactory/api-documentation/blob/master/upload-instructions.md)
 
 
-## Click and Print Documentation
-
-Click and Print protocol to connect a internet-connected 3D printer to MyMiniFactory for direct printing. Printer control from the [MyMiniFactory Mobile App](https://www.myminifactory.com/pages/install-mobile-app)
- - [Protocol Workflow Diagram](https://github.com/MyMiniFactory/api-documentation/blob/master/assets/Click-and-Print_Protocol_Diagram-0.2.2.pdf)
- - [HTTP/MQTT protocol](https://github.com/MyMiniFactory/api-documentation/blob/master/click-and-print-protocol.md)
-
-
 ## Security contact
 
 Please disclose any security-related issues or vulnerabilities by emailing [info@myminifactory.com](mailto:info@myminifactory.com).
